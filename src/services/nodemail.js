@@ -5,9 +5,9 @@ class Nodemail {
         const smtpTransport = nodemailer.createTransport({
             host: 'smtp.umbler.com',
             port: 587,
-            secure: true,
+            secure: false,
             auth: {
-                user: 'patric_kenneth',
+                user: 'patric_kenneth@projectsdev-reactjs.com',
                 pass: ')QpS8m6,{|'
             }
         });
@@ -23,9 +23,11 @@ class Nodemail {
         smtpTransport.sendMail(mail)
             .then(response => {
                 smtpTransport.close();
+                console.log(response);
             })
             .catch(error => {
                 smtpTransport.close();
+                console.log(error);
             });
         return data;
     };
