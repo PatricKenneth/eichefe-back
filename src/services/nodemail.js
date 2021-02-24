@@ -2,7 +2,6 @@ const nodemailer = require('nodemailer');
 
 class Nodemail {
     emailSend = (data) => {
-        console.log(data);
         const smtpTransport = nodemailer.createTransport({
             host: 'smtp.umbler.com',
             port: 587,
@@ -28,6 +27,7 @@ class Nodemail {
             .catch(error => {
                 smtpTransport.close();
             });
+        return data;
     };
 };
 

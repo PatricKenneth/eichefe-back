@@ -21,10 +21,9 @@ app.use(cors());
 app.get('/', (req, res, next) => {
     res.status(200).send("API Ligada.");
 });
-app.get('/sendEmail', (req, res, next) => {
-    console.log(req.body.data);
-    // nodemail.emailSend(req.body);
-    res.status(200).send("Chegou.");
+app.post('/sendEmail', (req, res, next) => {
+    const response = nodemail.emailSend(req.body);
+    res.status(200).send(response);
 });
 
 module.exports = app;
