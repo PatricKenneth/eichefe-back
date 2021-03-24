@@ -4,7 +4,7 @@ const config = require('./bin/config');
 const cors = require('cors');
 const app = express();
 const morgan = require('morgan');
-const nodemail = require('./src/services/nodemail');
+const telegramBot = require('./src/services/sendMessage');
 
 app.use(bodyParser.json({
     limit: '15mb'
@@ -21,9 +21,14 @@ app.use(cors());
 app.get('/', (req, res, next) => {
     res.status(200).send("API Ligada.");
 });
-app.post('/sendEmail', (req, res, next) => {
-    const response = nodemail.emailSend(req.body);
-    res.status(200).send(response);
+app.post('/sendMessage', async (req, res, next) => {
+    try {
+        const response = telegramBot.messageSend(req.body);
+        res.status(200).send({ status: 'OK', fail: false, data: response });
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({ status: 'Fail', fail: true, data: error });
+    }
 });
 
 module.exports = app;
