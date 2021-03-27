@@ -12,14 +12,15 @@ app.use(bodyParser.json({
 app.use(bodyParser.urlencoded({
     extended: true
 }));
+app.use(express.static(__dirname));
 app.use(morgan('dev'));
 
 // Habilita o CORS
 app.use(cors());
 
 // Define as Rotas
-app.get('/', (req, res, next) => {
-    res.status(200).send("API Ligada.");
+app.get('/testApi', (req, res, next) => {
+    res.status(200).send("API Funcionando.");
 });
 app.post('/sendMessage', async (req, res, next) => {
     try {
