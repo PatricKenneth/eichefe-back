@@ -3,6 +3,7 @@ const serverless = require('serverless-http');
 const app = express();
 const router = express.Router();
 const cors = require('cors');
+const bodyParser = require('body-parser');
 const telegramBot = require('./services/sendMessage');
 
 router.get('/', (req, res, next) => {
@@ -18,8 +19,13 @@ router.post('/sendMessage', async (req, res, next) => {
     }
 });
 
-// Habilita o CORS
 app.use(cors());
+app.use(bodyParser.json({
+    limit: '15mb'
+}));
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
 
 app.use('/.netlify/functions/app', router);
 
