@@ -2,6 +2,7 @@ const express = require('express');
 const serverless = require('serverless-http');
 const app = express();
 const router = express.Router();
+const cors = require('cors');
 const telegramBot = require('./services/sendMessage');
 
 router.get('/', (req, res, next) => {
@@ -16,6 +17,9 @@ router.post('/sendMessage', async (req, res, next) => {
         res.status(500).send({ status: 'Fail', fail: true, data: error });
     }
 });
+
+// Habilita o CORS
+app.use(cors());
 
 app.use('/.netlify/functions/app', router);
 
