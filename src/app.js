@@ -3,15 +3,22 @@ const serverless = require('serverless-http');
 const app = express();
 const router = express.Router();
 const cors = require('cors');
+const TelegramBot = require(`node-telegram-bot-api`);
 const bodyParser = require('body-parser');
-const telegramBot = require('./services/sendMessage');
+const telegramBotService = require('./services/sendMessage');
+
+// const TOKEN = '1652801314:AAE_XRZdfDBa0r4hp2kiyAnZi_puP_r-F8g';
+// const CHAT_ID = 1094771835
+const TOKEN = '1629311094:AAH7Ml3KPT4xRiZ17lzGzodVEQpiYte2n7c';
+const CHAT_ID = 1609702003;
+const bot = new TelegramBot(TOKEN, {polling: true});
 
 router.get('/', (req, res, next) => {
     res.status(200).send("API Ligada.");
 });
 router.post('/sendMessage', async (req, res, next) => {
     try {
-        const response = telegramBot.messageSend(req.body);
+        const response = telegramBotService.messageSend(req.body, bot);
         res.status(200).send({ status: 'OK', fail: false, data: response });
     } catch (error) {
         console.log(error);
